@@ -1,57 +1,44 @@
-from flask import Flask
+from flask import Flask, request, url_for
 
 app = Flask(__name__)
 
 
-@app.route('/choice/<planet_name>')
-def planet(planet_name="Сатурн"):
-    name = planet_name.lower()
-    if name == "марс":
-        result = ["Эта планета близка к Земле",
-                  "На ней много необходимых ресурсов",
-                  "На ней есть вода и атмосфера",
-                  "На ней есть небольшое магнитное поле",
-                  "Наконец, она просто красива!"]
-    elif name == "венера":
-        result = ["Эта планета далеко от Земле",
-                  "На ней нет необходимых ресурсов",
-                  "На ней нет воды и атмосферы",
-                  "На ней есть большое магнитное поле",
-                  "Она некрасива!"]
-    elif name == "сатурн":
-        result = ["Эта планета на среднем расстоянии от Земли",
-                  "На ней есть нужные ресурсы",
-                  "Есть немного воды и воздуха",
-                  "Среднее магнитное поле",
-                  "Она красивая!"]
-    return """<!DOCTYPE html>
-    <html lang="ru">
-    <head>
-        <meta charset="utf-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-                   <link rel="stylesheet"
-                   href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-                   integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
-                   crossorigin="anonymous">
-        <title>реклама</title>
-    </head>
-    <body>
-    <h1>Моё предложение: {}</h1>
-    <h2>{}</h2>
-    <div class="alert alert-primary" role="alert">
-        <h3>{}</h3>
-    </div>
-    <div class="alert alert-info" role="alert">
-        <h3>{}</h3>
-    </div>
-    <div class="alert alert-success" role="alert">
-        <h3>{}</h3>
-    </div>
-    <div class="alert alert-warning" role="alert">
-        <h3>{}</h3>
-    </div>
-    </body>
-    </html>""".format(planet_name, *result)
+@app.route('/load_photo', methods=['POST', 'GET'])
+def load_photo():
+    name = ""
+    html = """<!DOCTYPE html>
+        <html lang="ru">
+        <head>
+            <meta charset="utf-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                       <link rel="stylesheet"
+                       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+                       integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+                       crossorigin="anonymous">
+            <link rel="stylesheet" type="text/css" href="{}"/>
+            <title>реклама</title>
+        </head>
+        <body>
+        <h1>Загрузка фотографии</h1>
+        <h3>Для участия в миссии</h3>
+        <form class="login_form" method="post" enctype="multipart/form-data">
+            Приложите фотографию
+            <input type="file" class="form-control-file" id="photo" name="file">
+            <img src="{}" alt="здесь должна была быть картинка, но не нашлась">
+            <button type="submit" class="btn btn-primary">Записаться</button>
+        </form>
+        </body>
+        </html>"""
+    if request.method == 'GET':
+        return html.format(url_for('static', filename='css/style.css'),
+                           url_for('static', filename=f"img/{name}"))
+    elif request.method == 'POST':
+        if "file" in request.files:
+            file = request.files["file"]
+            name = file.filename
+            file.save(f"static/img/{name}")
+            return html.format(url_for('static', filename='css/style.css'),
+                               url_for('static', filename=f"img/{name}"))
 
 
 if __name__ == '__main__':
