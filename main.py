@@ -13,7 +13,22 @@ def list_prof(list_type):
     professions = ["инженер-строитель", "пилот",
                    "строитель", "экзобиолог",
                    "врач", "штурман"]
-    return render_template("list_prof.html", list_type=list_type, professions=professions)
+    return render_template("list_prof.html", file="style.css", list_type=list_type, professions=professions)
+
+
+@app.route('/auto_answer')
+@app.route('/answer')
+def auto_answer():
+    data = {
+        "surname": "Watny",
+        "name": "Mark",
+        "education": "выше среднего",
+        "profession": "штурман марсохода",
+        "sex": "male",
+        "motivation": "Всегда мечтал застрять на Марсе!",
+        "ready": "True"
+    }
+    return render_template("auto_answer.html", file="style1.css", data=data)
 
 
 if __name__ == '__main__':

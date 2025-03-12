@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h4><strong>Фамилия:</strong> {{ data.surname }}</h4>
+        <h4><strong>Имя:</strong> {{ data.name }}</h4>
+        <h4><strong>Образование:</strong> {{ data.education }}</h4>
+        <h4><strong>Профессия:</strong> {{ data.profession }}</h4>
+        <h4><strong>Пол:</strong> {{ data.sex }}</h4>
+        <h4><strong>Мотивация</strong>:</strong> {{ data.motivation }}</h4>
+        <h4><strong>Готовы остаться на Марсе?:</strong> {{ data.ready }}</h4>
+    </div>
+{% endblock %}
