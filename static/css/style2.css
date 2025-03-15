@@ -1,0 +1,8 @@
+.mission-logo {
+    width: 100px; /* Adjust width as needed */
+    height: 100px; /* Adjust height as needed */
+    background-image: url("../img/MARS-2-7.png"); /* Adjust path if necessary */
+    background-size: contain; /* Ensure the image fits inside the div */
+    background-repeat: no-repeat;
+    background-position: center;
+}
