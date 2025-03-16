@@ -14,6 +14,11 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Войти')
 
 
+@app.route('/')
+def base():
+    return render_template("base.html")
+
+
 @app.route('/<title>')
 def index(title):
     return render_template("base.html", title=title)
@@ -52,6 +57,11 @@ def login():
 def distribution():
     people = ["человек 1", "человек 2", "человек 3", "человек 4"]
     return render_template('distribution.html', file="style3.css", people=people)
+
+
+@app.route('/table/<string:sex>/<int:age>')
+def table(sex, age):
+    return render_template('table.html', file='style4.css', sex=sex, age=age)
 
 
 if __name__ == '__main__':

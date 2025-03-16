@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2 style="text-align: center">Оформление каюты</h2>
+
+    <table style="width: 60%; margin: 20px auto; border-collapse: collapse; text-align: center; height: 300px;">
+        <tr>
+            <!-- First row: Column titles -->
+            <th style="padding: 10px; width: 50%;">Цвет стен</th>
+            <th style="padding: 10px; width: 50%;">Эмблема</th>
+        </tr>
+
+        <tr style="height: 100%;">
+            <!-- Third row: Color block based on sex -->
+            <td>
+                <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+                            font-weight: bold; background-color: {% if sex == 'male' %}blue{% else %}red{% endif %};
+                            color: white;">
+                </div>
+            </td>
+
+            <!-- Third row: Image based on age -->
+            <td>
+                <img src="{% if age < 21 %}{{ url_for('static', filename='img/MARS-2-7.png') }}{% else %}{{ url_for('static', filename='img/MARS.png') }}{% endif %}"
+                     alt="Age-based Image"
+                     style="width: 100%; height: 100%; object-fit: cover;">
+            </td>
+        </tr>
+    </table>
+{% endblock %}
