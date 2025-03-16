@@ -48,5 +48,11 @@ def login():
     return render_template('login.html', file="style2.css", title='Авторизация', form=form)
 
 
+@app.route('/distribution')
+def distribution():
+    people = ["человек 1", "человек 2", "человек 3", "человек 4"]
+    return render_template('distribution.html', file="style3.css", people=people)
+
+
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1')
