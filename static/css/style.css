@@ -1,5 +1,30 @@
-h4 {
-    color: lightgray;
-    padding: 100px;
+.job-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.job-table th, .job-table td {
+    padding: 8px;
+    text-align: left;
+}
+
+.job-table th {
+    background-color: #d3d3d3;
+    color: white;
+}
+
+.blue-text {
+    background-color: #a3c1e0;
+    color: black;
+}
+
+.green-text {
+    background-color: #b0d9b1;
+    color: black;
+}
+
+.red-text {
+    background-color: #e0a3a3;
+    color: black;
 }
 

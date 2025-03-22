@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Job List</h1>
+    {% for job in jobs %}
+        <h2>Action #{{ job.id }}</h2>
+        <table class="job-table">
+            <tr>
+                <th>Title of Activity</th>
+                <th>Team Leader</th>
+                <th>Duration</th>
+                <th>List of Collaborators</th>
+                <th>Is Finished</th>
+            </tr>
+            <tr>
+                <td class="blue-text">{{ job.title }}</td>
+                <td class="blue-text">{{ job.team_leader }}</td>
+                <td class="blue-text">{{ job.duration }}</td>
+                <td class="blue-text">{{ job.collaborators }}</td>
+                <td class="{% if job.is_finished == 'Yes' %}green-text{% else %}red-text{% endif %}">{{ job.is_finished }}</td>
+            </tr>
+        </table>
+        <br>
+    {% endfor %}
+{% endblock %}
