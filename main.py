@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from sql.data.jobs import Jobs
 from sql.data.users import User
+from sql.data.register import RegisterForm
 from sql.data.db_session import create_session, global_init
 
 app = Flask(__name__)
@@ -24,7 +25,13 @@ def index():
             "is_finished": "Yes" if job.is_finished else "No"
         })
 
-    return render_template("addjob.html", file='style.css', jobs=jobs_data)
+    return render_template("index.html", file='style.css', jobs=jobs_data)
+
+
+@app.route('/register')
+def register():
+    form = RegisterForm()
+    return render_template('register.html', form=form)
 
 
 def main():
