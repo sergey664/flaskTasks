@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Добавить работу</h2>
+    <form method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.job.label }}<br>
+            {{ form.job(class="form-control") }}
+        </p>
+        <p>
+            {{ form.team_leader.label }}<br>
+            {{ form.team_leader(class="form-control") }}
+        </p>
+        <p>
+            {{ form.work_size.label }}<br>
+            {{ form.work_size(class="form-control") }}
+        </p>
+        <p>
+            {{ form.collaborators.label }}<br>
+            {{ form.collaborators(class="form-control") }}
+        </p>
+        <p>
+            {{ form.start_date.label }}<br>
+            {{ form.start_date(class="form-control", type="date") }}
+        </p>
+        <p>
+            {{ form.end_date.label }}<br>
+            {{ form.end_date(class="form-control", type="date") }}
+        </p>
+        <p>
+            {{ form.is_finished() }} {{ form.is_finished.label }}
+        </p>
+        <p>
+            {{ form.submit(class="btn btn-primary") }}
+        </p>
+    </form>
+{% endblock %}
