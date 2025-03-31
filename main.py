@@ -5,8 +5,10 @@ from sql.data.login_form import LoginForm
 from sql.data.register import RegisterForm
 from sql.data.add_job import Job
 from sql.data.__all_models import users, jobs
+from api.jobs_api import blueprint
 
 app = Flask(__name__)
+app.register_blueprint(blueprint)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 login_manager = LoginManager()
 login_manager.init_app(app)
