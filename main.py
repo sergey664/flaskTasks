@@ -6,6 +6,7 @@ from sql.data.register import RegisterForm
 from sql.data.add_job import Job
 from sql.data.__all_models import users, jobs
 from api.jobs_api import blueprint
+import requests
 
 app = Flask(__name__)
 app.register_blueprint(blueprint)
@@ -22,21 +23,7 @@ def load_user(user_id):
 
 @app.route('/')
 def index():
-    session = db_session.create_session()
-    jobs_list = session.query(jobs.Jobs).all()
-    jobs_data = []
-
-    for job in jobs_list:
-        team_leader = session.query(users.User).filter((users.User.id == job.team_leader)).first()
-        jobs_data.append({
-            "id": job.id,
-            "title": job.job,
-            "team_leader": f"{team_leader.name} {team_leader.surname}" if team_leader else "Unknown",
-            "team_leader_id": job.team_leader,
-            "duration": f"{job.work_size} hours",
-            "collaborators": job.collaborators,
-            "is_finished": "Yes" if job.is_finished else "No"
-        })
+    jobs_data = requests.get("http://localhost:5000/api/jobs").json()
 
     return render_template("index.html", file='style.css', jobs=jobs_data)
 
@@ -148,21 +135,14 @@ def edit_job(job_id):
     return render_template('addjob.html', form=form)
 
 
-@app.route('/deletejob/<int:job_id>', methods=['GET', 'POST'])
+@app.route('/delete_job/<int:job_id>', methods=['GET', 'POST'])
 @login_required
 def delete_job(job_id):
-    session = db_session.create_session()
-    job = session.query(jobs.Jobs).get(job_id)
+    jobs_data = requests.get(f"http://localhost:5000/api/delete_job/{job_id}").json()
+    if jobs_data:
+        return redirect('/')
 
-    if not job:
-        abort(404)
-
-    if current_user.id != job.team_leader and current_user.id != 1:
-        abort(403)
-
-    session.delete(job)
-    session.commit()
-    return redirect('/')
+    return
 
 
 def main():

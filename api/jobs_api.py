@@ -41,3 +41,14 @@ def get_job(job_id):
                                   "is_finished",
                                   "team_leader"))
     }
+
+
+@blueprint.route("/delete_job/<int:job_id>")
+def delete_job(job_id):
+    session = db_session.create_session()
+    job = session.query(Jobs).get(job_id)
+    if not job:
+        return flask.make_response(flask.jsonify({"error": "Not found"}), 404)
+    session.delete(job)
+    session.commit()
+    return flask.jsonify({"success": "ok"})
